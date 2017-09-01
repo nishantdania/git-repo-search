@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import cx from 'classnames';
 import styles from './searchResultsList.css'; 
+import SearchListItem from '../SearchListItem';
 
 class SearchResultsList extends Component {
 
@@ -12,9 +13,10 @@ class SearchResultsList extends Component {
 
     return <ul>
       {repos.map((repo, index) => 
-        <li key={index}>
-          {repo.full_name}
-        </li>
+        <SearchListItem 
+          key={index}
+          repo={repo}
+        />
       )}
     </ul>
   }
