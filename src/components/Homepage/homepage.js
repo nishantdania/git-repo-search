@@ -13,6 +13,9 @@ class Homepage extends Component {
       </h1>
       <SearchWidget />
       <RecentSearches />
+      <div className={cx(styles['code'])}>
+        <a href='https://github.com/nishantdania/git-repo-search' target='_blank'>View Code</a>
+      </div>
     </div>
   }
 
