@@ -6,7 +6,10 @@ import SearchWidget from '../SearchWidget';
 class Homepage extends Component {
 
   render () {
-    return <div>
+    return <div className={cx(styles['outer'])}>
+      <h1>
+        Git Repo Search
+      </h1>
       <SearchWidget />
     </div>
   }

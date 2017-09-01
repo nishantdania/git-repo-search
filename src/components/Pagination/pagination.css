@@ -1,0 +1,39 @@
+.outer {
+  padding: 0px 24px 24px 24px;
+}
+
+.button {
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  padding: 8px;
+  color: #444;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #f9f9f9;
+}
+
+.inactive {
+  color: #d0d0d0;
+  cursor: not-allowed;
+}
+
+.total {
+  color: #555;
+  padding: 0 10px;
+}
+
+.input-container input {
+  margin: 0px 0 0 16px;
+  border: 1px solid #8a8a8a;
+  color: #555;
+  outline: none;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 4px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  width: 30px;
+  text-align: center;
+}

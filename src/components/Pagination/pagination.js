@@ -45,19 +45,24 @@ class Pagination extends Component {
       return null;
     }
 
-    return <div>
-      <span onClick={handlePrevClick}>
+    var prevInactive = (page === '1');
+    var nextInactive = (parseInt(page, 10) === total);
+
+    return <div className={cx(styles['outer'])}>
+      <span onClick={prevInactive ? null : handlePrevClick}
+        className={cx(styles['button'], {[styles['inactive']]: prevInactive})}>
         Previous
       </span>
-      <span>
+      <span className={cx(styles['input-container'])}>
         <input 
           value={value}
           onKeyPress={this.handleKeyPress}
           onChange={this.handleChange}
         />
       </span>
-      <span> of {total} </span>
-      <span onClick={handleNextClick}>
+      <span className={cx(styles['total'])} > of {total} </span>
+      <span onClick={nextInactive ? null : handleNextClick}
+        className={cx(styles['button'], {[styles['inactive']]: nextInactive})}>
         Next 
       </span>
     </div>  

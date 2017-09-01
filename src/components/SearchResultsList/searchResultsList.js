@@ -11,7 +11,7 @@ class SearchResultsList extends Component {
       return null;
     }
 
-    return <ul>
+    return <ul className={cx(styles['list'])}>
       {repos.map((repo, index) => 
         <SearchListItem 
           key={index}
