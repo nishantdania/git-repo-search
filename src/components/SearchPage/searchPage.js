@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import * as actions from '../../actions/searchActions';
 import { connect } from 'react-redux';
 import SearchWidget from '../SearchWidget'
+import SearchResultsList from '../SearchResultsList';
 
 class SearchPage extends Component {
 
@@ -41,8 +42,14 @@ class SearchPage extends Component {
   }
 
   render () {
+
+    const {currentResults} = this.state;
+
     return <div>
       <SearchWidget />
+      <SearchResultsList
+        repos={currentResults.result && currentResults.result.items}
+      />
     </div>
   }
 

@@ -19,7 +19,7 @@ class SearchWidget extends Component {
     const { history } = this.props;
     const { keyword } = this.state;
 
-    if(e.which === 13 && keyword.length > 0) {
+    if(e.which === 13) {
       var url = '/search?q=' + keyword + '&page=1';
       history.push(url);
     }
