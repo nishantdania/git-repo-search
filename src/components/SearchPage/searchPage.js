@@ -24,11 +24,15 @@ class SearchPage extends Component {
 
   componentWillReceiveProps (nextProps) {
     window.scrollTo(0,0);
+    const { status } = nextProps;
+    if(status === SEARCH.ERROR && this.props.location === nextProps.location) {
+      return;
+    } 
     this.parseAndSearch(nextProps);    
   }
 
   parseAndSearch  = (props, nextPage) => {
-    const { history, location, search, searchResults } = props;
+    const { history, location, search, searchResults, status } = props;
     var parsed = queryString.parse(location.search);
     var data = {
       keyword: parsed.q,
@@ -96,11 +100,18 @@ class SearchPage extends Component {
         </div>
       </Link>
       <SearchWidget extra={true}/>
-      <div className={cx(styles['title'])}>
-        Showing results for <span>{keyword}</span>
-      </div>
+      {status !== SEARCH.ERROR ? 
+        <div className={cx(styles['title'])}>
+          Showing results for <span>{keyword}</span>
+        </div> 
+      : null }
       {status === SEARCH.LOADING ? <Loader /> : null}
-      {status === SEARCH.SUCCESS ? <div>
+      {status === SEARCH.ERROR || count === 0 ?
+        <div className={cx(styles['error'])}>
+          Oops ! We couldn't find the results you  were looking for. Please try again later.
+        </div>
+      : null}
+      {status === SEARCH.SUCCESS && count > 0 ? <div>
         <SearchResultsList
           repos={currentResults.result && currentResults.result.items}
         />
