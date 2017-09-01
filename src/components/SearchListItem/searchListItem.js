@@ -8,6 +8,13 @@ class SearchListItem extends Component {
     expand: false
   }
 
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      expand: false
+    });
+  }
+
+
   toggle = () => {
     this.setState({
       expand: !this.state.expand
