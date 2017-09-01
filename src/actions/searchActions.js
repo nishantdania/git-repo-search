@@ -3,10 +3,9 @@ import { SEARCH } from './constants.js';
 import { formatData } from '../utils/githubService.js';
 
 export const search = (data, onlyOnce = false) => (dispatch) => {
-
   if(!onlyOnce) {
     dispatch({
-      type: SEARCH.SEARCH_REQUEST,
+      type: SEARCH.SEARCH_REQUEST
     });
 
     ApiCaller.get(
@@ -31,7 +30,9 @@ export const search = (data, onlyOnce = false) => (dispatch) => {
         });
       })
       .catch((err) => {
-
+        dispatch({
+          type: SEARCH.SEARCH_ERROR
+        });
       });
   }
 
@@ -57,7 +58,7 @@ export const search = (data, onlyOnce = false) => (dispatch) => {
       });
     })
     .catch((err) => {
-
+      // do nothing
     });
 
 }
