@@ -3,7 +3,7 @@ import { SEARCH } from '../actions/constants';
 const searchResults = (state = {
 }, action) => {
   switch (action.type) {
-    case SEARCH.SEARCH_SUCCESS:
+    case SEARCH.SEARCH_SUCCESS: {
       var { data } = action; 
       var { page, keyword, result } = data || {};
       return {
@@ -14,8 +14,8 @@ const searchResults = (state = {
             result
           }
         }
-      }; 
-    case SEARCH.SEARCH_EXTRA_SUCCESS:
+      };}
+    case SEARCH.SEARCH_EXTRA_SUCCESS: {
       var { data } = action; 
       var { page, keyword, result } = data || {};
       return {
@@ -26,7 +26,7 @@ const searchResults = (state = {
             result
           }
         }
-      };
+      };}
     default:
       return state;
   }

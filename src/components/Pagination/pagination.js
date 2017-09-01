@@ -38,7 +38,7 @@ class Pagination extends Component {
             total, 
             handleNextClick, 
             handlePrevClick,
-            gotoPage } = this.props;
+          } = this.props;
     const { value } = this.state;
   
     if(!page || !total) {
