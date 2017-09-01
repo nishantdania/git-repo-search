@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import cx from 'classnames';
-import styles from './searchPage.css';
+import styles from './searchPage.css'; 
 import queryString from 'query-string';
-import * as actions from '../../actions/searchActions';
-import { connect } from 'react-redux';
-import SearchWidget from '../SearchWidget'
+import * as actions from '../../actions/searchActions.js';
+import { connect  } from 'react-redux';
+import SearchWidget from '../SearchWidget';
 import SearchResultsList from '../SearchResultsList';
 import Pagination from '../Pagination';
 import { SEARCH } from '../../actions/constants.js';
@@ -13,15 +13,15 @@ import { withRouter } from 'react-router-dom';
 class SearchPage extends Component {
 
   state = {
-    currentResults: {}
+    currentResults: {},
   }
 
   componentDidMount () {
-    this.parseAndSearch(this.props);
+    this.parseAndSearch(this.props);    
   }
 
   componentWillReceiveProps (nextProps) {
-    this.parseAndSearch(nextProps);
+    this.parseAndSearch(nextProps);    
   }
 
   parseAndSearch  = (props, nextPage) => {
@@ -46,10 +46,14 @@ class SearchPage extends Component {
           currentResults: results,
           page: data.page
         });
+        var nextPage = parseInt(data.page) + 1;
+        if(!keyData[nextPage]) {
+          search(data, true);
+        }
         return;
       }
     }
-    search(data); 
+    search(data);
   }
 
   handleNextClick = () => {
@@ -92,7 +96,6 @@ class SearchPage extends Component {
       />
     </div>
   }
-
 }
 
 const mapStateToProps = (state) => {
@@ -100,7 +103,6 @@ const mapStateToProps = (state) => {
     searchResults: state.searchResults,
   };
 };
-
 
 SearchPage = withRouter(connect(
   mapStateToProps,
