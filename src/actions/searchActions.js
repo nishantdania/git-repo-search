@@ -4,11 +4,10 @@ import { formatData } from '../utils/githubService.js';
 
 export const search = (data, onlyOnce = false) => (dispatch) => {
 
-  dispatch({
-    type: SEARCH.SEARCH_REQUEST,
-  });
-
   if(!onlyOnce) {
+    dispatch({
+      type: SEARCH.SEARCH_REQUEST,
+    });
 
     ApiCaller.get(
       '/search/repositories',
