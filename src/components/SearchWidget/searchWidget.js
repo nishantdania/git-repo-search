@@ -20,17 +20,57 @@ class SearchWidget extends Component {
     const { keyword } = this.state;
 
     if(e.which === 13) {
+      if(keyword.length < 1) {
+        return;
+      }
+      this.updateLocalStorage(keyword);
       var url = '/search?q=' + keyword + '&page=1';
       history.push(url);
     }
   }
 
+  handleClick = (e) => {
+    const { history } = this.props;
+    const { keyword } = this.state;
+    if(keyword.length < 1) {
+      return;
+    }
+    this.updateLocalStorage(keyword);
+    var url = '/search?q=' + keyword + '&page=1';
+    history.push(url);
+  }
+
+  updateLocalStorage = (data) => {
+    if(data.length > 0) {
+      var prev = [];
+      prev = JSON.parse(localStorage.getItem('recent')) || [];
+      if(prev.includes(data)) {
+        var index = prev.indexOf(data);
+        prev.splice(index, 1);
+      }
+      if(prev.length > 4) {
+        prev.splice(0, 1);
+      }
+      prev.push(data);
+      localStorage.setItem('recent', JSON.stringify(prev));
+    }
+  }
+
   render () {
-    return <div>
+
+    const { extra } = this.props;
+
+    return <div className={cx(styles['outer'], {[styles['extra']]: extra})}>
       <input 
+        placeholder='e.g. react, ember'
         onChange={this.handleChange}
         onKeyPress={this.handleKeyPress}
       />
+      <span 
+        onClick={this.handleClick}
+        className={cx(styles['search'])}>
+        Go
+      </span>
     </div>
   }
 

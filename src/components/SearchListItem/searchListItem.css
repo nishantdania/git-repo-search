@@ -1,0 +1,38 @@
+.item {
+  padding: 8px 0;
+  margin: 8px auto;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.item:hover {
+  border: 1px solid #c3c3c3;
+}
+
+.content {
+  padding: 0 8px;
+  color: #444;
+  overflow-wrap: break-word;
+}
+
+.name {
+  padding: 12px 0;
+}
+
+.data {
+  margin: 16px auto; 
+}
+
+.data span {
+  font-weight: 500;
+}
+
+.details {
+  border-top: 1px solid #eee;
+}
+
+.desc {
+  margin: 8px auto;
+}

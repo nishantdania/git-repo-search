@@ -30,16 +30,35 @@ class SearchListItem extends Component {
     }
   
     return <li 
+      className={cx(styles['item'])} 
       onClick={this.toggle}>
-      {repo.full_name}
-      {expand ?
-        <div>
-          Language: {repo.language}
-          Followers: {repo.followers}
-          Url: {repo.url}
-          Description: {repo.description}
+      <div className={cx(styles['content'])}>
+        <div className={cx(styles['name'])}>
+          {repo.full_name}
         </div>
-      : null}
+        {expand ?
+          <div className={cx(styles['details'])}>
+            <div className={cx(styles['data'])}>
+              <span>Language: </span>{repo.language || 'Not available'}
+              &nbsp;
+              |
+              <span> Followers: </span>{repo.followers}
+            </div>
+            <div className={cx(styles['data'])}>
+              <span>Link: </span>
+              <a href={repo.url} target='_blank'>{repo.url}</a>
+            </div>
+            <div className={cx(styles['data'])}>
+              <span>
+                Description:
+              </span>
+              <div className={cx(styles['desc'])}>
+                {repo.description}
+              </div>
+            </div>
+          </div>
+        : null}
+      </div>
     </li>
   }
 }

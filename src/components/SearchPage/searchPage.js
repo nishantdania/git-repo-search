@@ -8,7 +8,7 @@ import SearchWidget from '../SearchWidget';
 import SearchResultsList from '../SearchResultsList';
 import Pagination from '../Pagination';
 import { SEARCH } from '../../actions/constants.js';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 class SearchPage extends Component {
 
@@ -17,10 +17,12 @@ class SearchPage extends Component {
   }
 
   componentDidMount () {
+    window.scrollTo(0,0);
     this.parseAndSearch(this.props);    
   }
 
   componentWillReceiveProps (nextProps) {
+    window.scrollTo(0,0);
     this.parseAndSearch(nextProps);    
   }
 
@@ -82,8 +84,20 @@ class SearchPage extends Component {
     var count = currentResults.result && currentResults.result.count; 
     var total = count === 0 ? 0 : Math.floor(count/SEARCH.PER_PAGE); 
 
-    return <div>
-      <SearchWidget />
+    const { location } = this.props;
+    var parsed = queryString.parse(location.search);
+    var keyword = parsed.q;
+
+    return <div className={cx(styles['outer'])}>
+      <Link to='/'>
+        <div className={cx(styles['home'])}>
+          Git Repo Search
+        </div>
+      </Link>
+      <SearchWidget extra={true}/>
+      <div className={cx(styles['title'])}>
+        Showing results for <span>{keyword}</span>
+      </div>
       <SearchResultsList
         repos={currentResults.result && currentResults.result.items}
       />
