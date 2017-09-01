@@ -46,7 +46,7 @@ class SearchPage extends Component {
           currentResults: results,
           page: data.page
         });
-        var nextPage = parseInt(data.page) + 1;
+        nextPage = parseInt(data.page, 10) + 1;
         if(!keyData[nextPage]) {
           search(data, true);
         }
@@ -58,17 +58,17 @@ class SearchPage extends Component {
 
   handleNextClick = () => {
     const {currentResults, page} = this.state;
-    var count = currentResults.result && currentResults.result.count || 0; 
+    var count = currentResults.result && currentResults.result.count; 
     var total = count === 0 ? 0 : Math.floor(count/SEARCH.PER_PAGE); 
     if(page < total) {
-      this.gotoPage(parseInt(page) + 1);
+      this.gotoPage(parseInt(page, 10) + 1);
     }
   }
 
   handlePrevClick = () => {
-    const {currentResults, page} = this.state;
+    const {page} = this.state;
     if(page > 1) {
-      this.gotoPage(parseInt(page) - 1);
+      this.gotoPage(parseInt(page, 10) - 1);
     }
   }
 
@@ -79,7 +79,7 @@ class SearchPage extends Component {
   render () {
 
     const {currentResults, page} = this.state;
-    var count = currentResults.result && currentResults.result.count || 0; 
+    var count = currentResults.result && currentResults.result.count; 
     var total = count === 0 ? 0 : Math.floor(count/SEARCH.PER_PAGE); 
 
     return <div>

@@ -41,7 +41,7 @@ export const search = (data, onlyOnce = false) => (dispatch) => {
     {
       params: {
         q: data.keyword,
-        page: parseInt(data.page) + 1 || 2,
+        page: parseInt(data.page, 10) + 1 || 2,
         per_page: SEARCH.PER_PAGE
       }
     })
@@ -49,7 +49,7 @@ export const search = (data, onlyOnce = false) => (dispatch) => {
       res = formatData(res.data);
       var result = {
         keyword: data.keyword,
-        page: parseInt(data.page) + 1 || 2,
+        page: parseInt(data.page, 10) + 1 || 2,
         result: res
       };
       dispatch({
