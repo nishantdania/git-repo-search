@@ -22,7 +22,7 @@ class SearchPage extends Component {
   }
 
   parseAndSearch = (props) => {
-    const { location, search, searchResults } = this.props;
+    const { location, search, searchResults } = props;
     var parsed = queryString.parse(location.search);
     var data = {
       keyword: parsed.q,
