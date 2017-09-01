@@ -6,6 +6,9 @@ import * as actions from '../../actions/searchActions';
 import { connect } from 'react-redux';
 import SearchWidget from '../SearchWidget'
 import SearchResultsList from '../SearchResultsList';
+import Pagination from '../Pagination';
+import { SEARCH } from '../../actions/constants.js';
+import { withRouter } from 'react-router-dom';
 
 class SearchPage extends Component {
 
@@ -21,34 +24,71 @@ class SearchPage extends Component {
     this.parseAndSearch(nextProps);
   }
 
-  parseAndSearch = (props) => {
-    const { location, search, searchResults } = props;
+  parseAndSearch  = (props, nextPage) => {
+    const { history, location, search, searchResults } = props;
     var parsed = queryString.parse(location.search);
     var data = {
       keyword: parsed.q,
-      page: parsed.page
+      page: nextPage ? nextPage : parsed.page || 0
     };
+    if(nextPage) {
+      parsed.page = nextPage;
+      var newQuery = queryString.stringify(parsed);
+      var newHref = location.pathname + '?' + newQuery;
+      history.push(newHref);
+      return; 
+    }
     if(searchResults[data.keyword]) {
       var keyData = searchResults[data.keyword];
       if(keyData[data.page]) {
         var results = keyData[data.page];
         this.setState({
-          currentResults: results
+          currentResults: results,
+          page: data.page
         });
         return;
       }
     }
-    search(data);
+    search(data); 
+  }
+
+  handleNextClick = () => {
+    const {currentResults, page} = this.state;
+    var count = currentResults.result && currentResults.result.count || 0; 
+    var total = count === 0 ? 0 : Math.floor(count/SEARCH.PER_PAGE); 
+    if(page < total) {
+      this.gotoPage(parseInt(page) + 1);
+    }
+  }
+
+  handlePrevClick = () => {
+    const {currentResults, page} = this.state;
+    if(page > 1) {
+      this.gotoPage(parseInt(page) - 1);
+    }
+  }
+
+  gotoPage = (page) => {
+    this.parseAndSearch(this.props, page);
   }
 
   render () {
 
-    const {currentResults} = this.state;
+    const {currentResults, page} = this.state;
+    var count = currentResults.result && currentResults.result.count || 0; 
+    var total = count === 0 ? 0 : Math.floor(count/SEARCH.PER_PAGE); 
 
     return <div>
       <SearchWidget />
       <SearchResultsList
         repos={currentResults.result && currentResults.result.items}
+      />
+      <Pagination 
+        page={page}
+        total={total}
+        handleNextClick={this.handleNextClick}
+        handlePrevClick={this.handlePrevClick}
+        gotoPage={this.gotoPage}
       />
     </div>
   }
@@ -62,9 +102,9 @@ const mapStateToProps = (state) => {
 };
 
 
-SearchPage = connect(
+SearchPage = withRouter(connect(
   mapStateToProps,
   actions
-)(SearchPage)
+)(SearchPage));
 
 export default SearchPage;

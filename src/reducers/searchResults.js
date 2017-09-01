@@ -8,7 +8,7 @@ const searchResults = (state = {}, action) => {
       return {
         ...state,
         [keyword]: {
-          ...state.keyword || {},
+          ...state[keyword],
           [page]: {  
             result
           }
