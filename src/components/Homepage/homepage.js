@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import cx from 'classnames';
 import styles from './homepage.css';
 import SearchWidget from '../SearchWidget';
+import RecentSearches from '../RecentSearches';
 
 class Homepage extends Component {
 
@@ -11,6 +12,7 @@ class Homepage extends Component {
         Git Repo Search
       </h1>
       <SearchWidget />
+      <RecentSearches />
     </div>
   }
 
