@@ -9,6 +9,7 @@ import SearchResultsList from '../SearchResultsList';
 import Pagination from '../Pagination';
 import { SEARCH } from '../../actions/constants.js';
 import { Link, withRouter } from 'react-router-dom';
+import Loader from '../Loader';
 
 class SearchPage extends Component {
 
@@ -84,7 +85,7 @@ class SearchPage extends Component {
     var count = currentResults.result && currentResults.result.count; 
     var total = count === 0 ? 0 : Math.floor(count/SEARCH.PER_PAGE); 
 
-    const { location } = this.props;
+    const { location, status } = this.props;
     var parsed = queryString.parse(location.search);
     var keyword = parsed.q;
 
@@ -98,16 +99,19 @@ class SearchPage extends Component {
       <div className={cx(styles['title'])}>
         Showing results for <span>{keyword}</span>
       </div>
-      <SearchResultsList
-        repos={currentResults.result && currentResults.result.items}
-      />
-      <Pagination 
-        page={page}
-        total={total}
-        handleNextClick={this.handleNextClick}
-        handlePrevClick={this.handlePrevClick}
-        gotoPage={this.gotoPage}
-      />
+      {status === SEARCH.LOADING ? <Loader /> : null}
+      {status === SEARCH.SUCCESS ? <div>
+        <SearchResultsList
+          repos={currentResults.result && currentResults.result.items}
+        />
+        <Pagination 
+          page={page}
+          total={total}
+          handleNextClick={this.handleNextClick}
+          handlePrevClick={this.handlePrevClick}
+          gotoPage={this.gotoPage}
+        />
+      </div> : null }
     </div>
   }
 }
@@ -115,6 +119,7 @@ class SearchPage extends Component {
 const mapStateToProps = (state) => {
   return {
     searchResults: state.searchResults,
+    status: state.loading.status
   };
 };
 
